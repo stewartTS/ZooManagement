@@ -13,6 +13,7 @@ namespace ZooManagement.Models.Database
         public string Species { get; set; }
         public Classification AnimalClassification { get; set; }
         public List<AnimalDbModel> Animals { get; set; } = new List<AnimalDbModel>();
+
     }
 
 }

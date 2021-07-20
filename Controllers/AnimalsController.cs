@@ -7,6 +7,7 @@ using Microsoft.Extensions.Logging;
 using ZooManagement.Models.API;
 using ZooManagement.Models.Database;
 using ZooManagement.Repositories;
+using ZooManagement.Request;
 
 namespace ZooManagement.Controllers
 {
@@ -29,10 +30,31 @@ namespace ZooManagement.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult<AnimalAPIModel> GetbyId([FromRoute] int id)
+        public ActionResult<AnimalAPIModel> GetAnimalById([FromRoute] int id)
         {
-            var animal = _animals.GetById(id);
+            var animal = _animals.GetAnimalById(id);
             return new AnimalAPIModel(animal);
         }
+
+        [HttpPost("create")]
+        public ActionResult Create([FromBody] CreateAnimalRequest newAnimal)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            _animals.Create(newAnimal);
+
+            return Ok();
+        }
+
+        [HttpGet("species")]
+        public ActionResult<List<string>> GetAllSpecies()
+        {
+            return _animals.GetAllSpecies();
+            
+        }
+
     }
 }
