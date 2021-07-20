@@ -20,10 +20,11 @@ namespace ZooManagement.Controllers
             _logger = logger;
         }
 
-        [HttpGet]
-        public IEnumerable<Animal> Get()
+        [HttpGet("{id}")]
+        public ActionResult<AnimalDbModel> GetbyId([FromRoute] int id)
         {
-            
+           
+            return
         }
     }
 }

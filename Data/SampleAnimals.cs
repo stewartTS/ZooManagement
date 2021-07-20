@@ -9,9 +9,9 @@ namespace ZooManagement.Data
 {
     public class SampleAnimals
     { 
-         public static IEnumerable<Animal> GetAnimal()
+         public static IEnumerable<AnimalType> GetAnimal()
         {
-            yield return new Animal
+            yield return new AnimalType
             {
                 Species = "Lion"
             };

@@ -1,7 +1,7 @@
+using Microsoft.EntityFrameworkCore;
+
 namespace ZooManagement.Enums
 {
-    public class AnimalClassification
-    {
         public enum Classification
         {
             Mammal,
@@ -11,5 +11,4 @@ namespace ZooManagement.Enums
             Fish,
             Invertebrate
         }
-    }
 }
