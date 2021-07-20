@@ -9,7 +9,7 @@ namespace ZooManagement.Data
 {
     public class SampleAnimals
     { 
-         public static IEnumerable<AnimalType> GetAnimal()
+         public static IEnumerable<AnimalTypeDbModel> GetAnimal()
         {
             yield return new AnimalType
             {
@@ -19,5 +19,10 @@ namespace ZooManagement.Data
 
 
 
+    }
+
+    internal class AnimalType : AnimalTypeDbModel
+    {
+        public string Species { get; set; }
     }
 }
