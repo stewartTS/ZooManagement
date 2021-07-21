@@ -32,10 +32,9 @@ namespace ZooManagement
 
             if (!context.Animals.Any())
             {
-                var animals = SampleAnimals.GetAnimal();
-                //context.Animals.AddRange(animals);
+                var animals = SampleAnimals.GetAnimals();
+                context.Animals.AddRange(animals);
                 context.SaveChanges();
-
             }
         }
 
