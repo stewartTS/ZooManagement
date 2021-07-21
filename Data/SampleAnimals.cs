@@ -73,7 +73,13 @@ namespace ZooManagement.Data
                 AnimalClassification = (Classification)at[1]
             }).ToList();
 
-            return _animalData.Select(name => CreateRandomAnimal(name, animalTypes));
+            var animalData = new List<AnimalDbModel>();
+
+            for (var i = 0; i < 8; i++) { 
+                animalData.AddRange( _animalData.Select(name => CreateRandomAnimal(name, animalTypes)));
+            };
+
+            return animalData;
         }
 
         private static AnimalDbModel CreateRandomAnimal(string name, List<AnimalTypeDbModel> animalTypes)
@@ -82,10 +88,10 @@ namespace ZooManagement.Data
             var animal = new AnimalDbModel
             {
                 Name = name,
-                Sex = rnd.Next(0,1) == 1 ? "Male" : "Female",
-                DateOfBirth = new DateTime(rnd.Next(2015, 2019), rnd.Next(1, 12), rnd.Next(1, 28)),
+                Sex = rnd.Next(0,2) == 1 ? "Male" : "Female",
+                DateOfBirth = new DateTime(rnd.Next(2015, 2019), rnd.Next(1, 13), rnd.Next(1, 29)),
                 DateOfAcquisition = new DateTime(2020, rnd.Next(1, 12), rnd.Next(1, 28)),
-                AnimalType = animalTypes[rnd.Next(0, _animalTypeData.Count() - 1)]
+                AnimalType = animalTypes[rnd.Next(0, _animalTypeData.Count())]
  
             };
 
