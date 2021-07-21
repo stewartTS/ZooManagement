@@ -14,7 +14,7 @@ namespace ZooManagement.Data
     {
         private static readonly IList<IList<object>> _animalTypeData = new List<IList<object>>
         {
-            new List<object> { "aardvark", Classification.Mammal },
+            new List<object> { "ardvark", Classification.Mammal },
             new List<object> { "bear", Classification.Mammal },
             new List<object> { "boar", Classification.Mammal },
             new List<object> { "buffalo", Classification.Mammal },
@@ -67,7 +67,12 @@ namespace ZooManagement.Data
 
         public static IEnumerable<AnimalDbModel> GetAnimals() 
         {
-            var animalTypes = new List<AnimalTypeDbModel>();
+            var animalTypes = _animalTypeData.Select(at => new AnimalTypeDbModel 
+            {
+                Species = (string)at[0],
+                AnimalClassification = (Classification)at[1]
+            }).ToList();
+
             return _animalData.Select(name => CreateRandomAnimal(name, animalTypes));
         }
 
@@ -76,14 +81,12 @@ namespace ZooManagement.Data
             var rnd = new Random();
             var animal = new AnimalDbModel
             {
-                Name = $"{name} {_suffixData[rnd.Next(0, _suffixData.Count -1)]}",
+                Name = name,
                 Sex = rnd.Next(0,1) == 1 ? "Male" : "Female",
                 DateOfBirth = new DateTime(rnd.Next(2015, 2019), rnd.Next(1, 12), rnd.Next(1, 28)),
                 DateOfAcquisition = new DateTime(2020, rnd.Next(1, 12), rnd.Next(1, 28)),
-                AnimalType = animalTypes[rnd.Next(0, _animalTypeData.Count - 1)]
+                AnimalType = animalTypes[rnd.Next(0, _animalTypeData.Count() - 1)]
  
-                //.Single(at => at.Species == (string)_animalData[index][2]
-                //    && at.AnimalClassification == (Classification)_animalData[index][3])
             };
 
             return animal;
