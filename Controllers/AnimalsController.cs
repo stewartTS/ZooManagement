@@ -24,10 +24,10 @@ namespace ZooManagement.Controllers
         }
 
         [HttpGet("search")]
-        public ActionResult<AnimalAPIModel> GetAnimals([FromQuery] AnimalParameters animalParameters)
+        public ActionResult<List<AnimalAPIModel>> GetAnimals([FromQuery] AnimalParameters animalParameters, [FromQuery] SearchParameters searchParameters)
         {
-            var animals = _animals.GetAnimals(animalParameters);
-            return Ok(animals);
+            var animals = _animals.GetAnimals(animalParameters, searchParameters);
+            return animals.Select(a => new AnimalAPIModel(a)).ToList();
         }
 
         [HttpGet("{id}")]

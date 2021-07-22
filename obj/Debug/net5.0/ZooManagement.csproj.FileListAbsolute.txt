@@ -107,3 +107,4 @@ C:\Users\suwtru\training\ZooManagement\obj\Debug\net5.0\ZooManagement.dll
 C:\Users\suwtru\training\ZooManagement\obj\Debug\net5.0\ref\ZooManagement.dll
 C:\Users\suwtru\training\ZooManagement\obj\Debug\net5.0\ZooManagement.pdb
 C:\Users\suwtru\training\ZooManagement\obj\Debug\net5.0\ZooManagement.genruntimeconfig.cache
+C:\Users\stebow\Techswitch Projects\ZooManagement\bin\Debug\net5.0\Newtonsoft.Json.dll

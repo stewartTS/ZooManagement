@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -15,7 +17,7 @@ namespace ZooManagement.Repositories
         void Create(CreateAnimalRequest newAnimal);
 
         List<string> GetAllSpecies();
-        IEnumerable<AnimalDbModel> GetAnimals(AnimalParameters animalParameters);
+        IEnumerable<AnimalDbModel> GetAnimals(AnimalParameters animalParameters, SearchParameters searchParameters);
 
 
     }
@@ -66,22 +68,24 @@ namespace ZooManagement.Repositories
 
         public IEnumerable<AnimalDbModel> GetAnimals(AnimalParameters animalParameters, SearchParameters searchParameters)
         {
-            var Infos = _context.Animals;
+            var query = _context.Animals
+                .AsQueryable();
 
-                if (searchParameters != null)
+            if (searchParameters != null)
             {
-               Infos = Infos.Where(
-                    x =>
-                    //(x.AnimalType.Species != null) && x.AnimalType.Species.ToLowerInvariant().Contains(searchParameters)) ||
-                    //(!string.IsNullOrEmpty(x.AnimalType.AnimalClassification) && x.AnimalType.AnimalClassification.ToLowerInvariant().Contains(searchParameters)) ||
-                   // //(!String.IsNullOrEmpty(x.Age) && x.Age.ToLowerInvariant().Contains(searchParameters)) ||
-                   !String.IsNullOrEmpty(x.Name) && x.Name.ToLowerInvariant().Contains(searchParameters) //||
+                query = query.Where(a => 
+                    (string.IsNullOrEmpty(searchParameters.Species) || a.AnimalType.Species.ToLower() == searchParameters.Species.ToLower()) &&
+                    (string.IsNullOrEmpty(searchParameters.Name) || a.Name.ToLower() == searchParameters.Name.ToLower()) &&
+                    (searchParameters.AnimalClassification == null) || a.AnimalType.AnimalClassification == searchParameters.AnimalClassification
+                    //    // //(!String.IsNullOrEmpty(x.Age) && x.Age.ToLowerInvariant().Contains(searchParameters)) ||
                     //(!String.IsNullOrEmpty(x.DateOfAcquisition) && x.DateOfAquisition.ToLowerInvariant().Contains(searchParameters)) ||
                     );
             }
 
-            return Infos
+
+            return query
                 .OrderBy(ap => ap.Name)
+                .Include(a => a.AnimalType)
                 .Skip((animalParameters.PageNumber - 1) * animalParameters.PageSize)
                 .Take(animalParameters.PageSize)
                 .ToList();

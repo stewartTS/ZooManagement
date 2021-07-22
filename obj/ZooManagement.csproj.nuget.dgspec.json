@@ -1,27 +1,21 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\suwtru\\training\\ZooManagement\\ZooManagement.csproj": {}
+    "C:\\Users\\stebow\\Techswitch Projects\\ZooManagement\\ZooManagement.csproj": {}
   },
   "projects": {
-    "C:\\Users\\suwtru\\training\\ZooManagement\\ZooManagement.csproj": {
+    "C:\\Users\\stebow\\Techswitch Projects\\ZooManagement\\ZooManagement.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\suwtru\\training\\ZooManagement\\ZooManagement.csproj",
+        "projectUniqueName": "C:\\Users\\stebow\\Techswitch Projects\\ZooManagement\\ZooManagement.csproj",
         "projectName": "ZooManagement",
-        "projectPath": "C:\\Users\\suwtru\\training\\ZooManagement\\ZooManagement.csproj",
-        "packagesPath": "C:\\Users\\suwtru\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\suwtru\\training\\ZooManagement\\obj\\",
+        "projectPath": "C:\\Users\\stebow\\Techswitch Projects\\ZooManagement\\ZooManagement.csproj",
+        "packagesPath": "C:\\Users\\stebow\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\stebow\\Techswitch Projects\\ZooManagement\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
-          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
-        ],
         "configFilePaths": [
-          "C:\\Users\\suwtru\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Users\\stebow\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net5.0"
@@ -57,6 +51,10 @@
             "Microsoft.EntityFrameworkCore.Sqlite": {
               "target": "Package",
               "version": "[5.0.8, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.1, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
