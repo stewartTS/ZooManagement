@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ZooManagement.Models;
+using ZooManagement.Models.API;
 using ZooManagement.Models.Database;
 using ZooManagement.Request;
 
@@ -13,6 +15,9 @@ namespace ZooManagement.Repositories
         void Create(CreateAnimalRequest newAnimal);
 
         List<string> GetAllSpecies();
+        IEnumerable<AnimalDbModel> GetAnimals(AnimalParameters animalParameters);
+
+
     }
 
     public class AnimalsRepo : IAnimalsRepo
@@ -34,8 +39,8 @@ namespace ZooManagement.Repositories
         {
             var existingAnimalType = _context.AnimalType
                 .SingleOrDefault(at => at.Species == newAnimal.Species && at.AnimalClassification == newAnimal.AnimalClassification)
-                ?? new AnimalTypeDbModel 
-                { 
+                ?? new AnimalTypeDbModel
+                {
                     Species = newAnimal.Species,
                     AnimalClassification = newAnimal.AnimalClassification
                 };
@@ -58,5 +63,15 @@ namespace ZooManagement.Repositories
         {
             return _context.AnimalType.Select(at => at.Species).ToList();
         }
+
+        public IEnumerable<AnimalDbModel> GetAnimals(AnimalParameters animalParameters)
+        {
+            return _context.Animals
+                .OrderBy(ap => ap.Name)
+                .Skip((animalParameters.PageNumber - 1) * animalParameters.PageSize)
+                .Take(animalParameters.PageSize)
+                .ToList();
+        }
     }
 }
+

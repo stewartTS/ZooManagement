@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using ZooManagement.Models;
 using ZooManagement.Models.API;
 using ZooManagement.Models.Database;
 using ZooManagement.Repositories;
@@ -22,11 +23,11 @@ namespace ZooManagement.Controllers
             _animals = animals;
         }
 
-        private readonly ILogger<AnimalsController> _logger;
-
-        public AnimalsController(ILogger<AnimalsController> logger)
+        [HttpGet]
+        public ActionResult<AnimalAPIModel> GetAnimals([FromQuery] AnimalParameters animalParameters)
         {
-            _logger = logger;
+            var animals = _animals.GetAnimals(animalParameters);
+            return Ok(animals);
         }
 
         [HttpGet("{id}")]

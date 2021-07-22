@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using ZooManagement.Repositories;
 
 namespace ZooManagement
 {
@@ -34,6 +35,9 @@ namespace ZooManagement
             });
 
             services.AddControllers();
+
+            services.AddTransient<IAnimalsRepo, AnimalsRepo>();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ZooManagement", Version = "v1" });
