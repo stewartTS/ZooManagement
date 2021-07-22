@@ -64,13 +64,29 @@ namespace ZooManagement.Repositories
             return _context.AnimalType.Select(at => at.Species).ToList();
         }
 
-        public IEnumerable<AnimalDbModel> GetAnimals(AnimalParameters animalParameters)
+        public IEnumerable<AnimalDbModel> GetAnimals(AnimalParameters animalParameters, SearchParameters searchParameters)
         {
-            return _context.Animals
+            var Infos = _context.Animals;
+
+                if (searchParameters != null)
+            {
+               Infos = Infos.Where(
+                    x =>
+                    //(x.AnimalType.Species != null) && x.AnimalType.Species.ToLowerInvariant().Contains(searchParameters)) ||
+                    //(!string.IsNullOrEmpty(x.AnimalType.AnimalClassification) && x.AnimalType.AnimalClassification.ToLowerInvariant().Contains(searchParameters)) ||
+                   // //(!String.IsNullOrEmpty(x.Age) && x.Age.ToLowerInvariant().Contains(searchParameters)) ||
+                   !String.IsNullOrEmpty(x.Name) && x.Name.ToLowerInvariant().Contains(searchParameters) //||
+                    //(!String.IsNullOrEmpty(x.DateOfAcquisition) && x.DateOfAquisition.ToLowerInvariant().Contains(searchParameters)) ||
+                    );
+            }
+
+            return Infos
                 .OrderBy(ap => ap.Name)
                 .Skip((animalParameters.PageNumber - 1) * animalParameters.PageSize)
                 .Take(animalParameters.PageSize)
                 .ToList();
+
+
         }
     }
 }

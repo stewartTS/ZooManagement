@@ -23,7 +23,7 @@ namespace ZooManagement.Controllers
             _animals = animals;
         }
 
-        [HttpGet]
+        [HttpGet("search")]
         public ActionResult<AnimalAPIModel> GetAnimals([FromQuery] AnimalParameters animalParameters)
         {
             var animals = _animals.GetAnimals(animalParameters);
