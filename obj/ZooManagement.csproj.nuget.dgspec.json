@@ -1,21 +1,27 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\stebow\\Techswitch Projects\\ZooManagement\\ZooManagement.csproj": {}
+    "C:\\Users\\suwtru\\training\\ZooManagement\\ZooManagement.csproj": {}
   },
   "projects": {
-    "C:\\Users\\stebow\\Techswitch Projects\\ZooManagement\\ZooManagement.csproj": {
+    "C:\\Users\\suwtru\\training\\ZooManagement\\ZooManagement.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\stebow\\Techswitch Projects\\ZooManagement\\ZooManagement.csproj",
+        "projectUniqueName": "C:\\Users\\suwtru\\training\\ZooManagement\\ZooManagement.csproj",
         "projectName": "ZooManagement",
-        "projectPath": "C:\\Users\\stebow\\Techswitch Projects\\ZooManagement\\ZooManagement.csproj",
-        "packagesPath": "C:\\Users\\stebow\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\stebow\\Techswitch Projects\\ZooManagement\\obj\\",
+        "projectPath": "C:\\Users\\suwtru\\training\\ZooManagement\\ZooManagement.csproj",
+        "packagesPath": "C:\\Users\\suwtru\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\suwtru\\training\\ZooManagement\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
+        ],
         "configFilePaths": [
-          "C:\\Users\\stebow\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\suwtru\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net5.0"

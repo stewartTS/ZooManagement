@@ -73,15 +73,18 @@ namespace ZooManagement.Repositories
 
             if (searchParameters != null)
             {
+                var earliestAge = DateTime.Now.AddYears(-searchParameters.Age - 1 ?? 0);
+                var currentAge = DateTime.Now.AddYears(-searchParameters.Age ?? 0);
+        
                 query = query.Where(a => 
                     (string.IsNullOrEmpty(searchParameters.Species) || a.AnimalType.Species.ToLower() == searchParameters.Species.ToLower()) &&
                     (string.IsNullOrEmpty(searchParameters.Name) || a.Name.ToLower() == searchParameters.Name.ToLower()) &&
-                    (searchParameters.AnimalClassification == null) || a.AnimalType.AnimalClassification == searchParameters.AnimalClassification
-                    //    // //(!String.IsNullOrEmpty(x.Age) && x.Age.ToLowerInvariant().Contains(searchParameters)) ||
-                    //(!String.IsNullOrEmpty(x.DateOfAcquisition) && x.DateOfAquisition.ToLowerInvariant().Contains(searchParameters)) ||
+                    (searchParameters.AnimalClassification == null || a.AnimalType.AnimalClassification == searchParameters.AnimalClassification) &&
+                    (searchParameters.Age == null || a.DateOfBirth <= currentAge && a.DateOfBirth > earliestAge) &&
+                    (searchParameters.DateOfAcquisition == null || a.DateOfAcquisition == searchParameters.DateOfAcquisition)
                     );
             }
-
+             
 
             return query
                 .OrderBy(ap => ap.Name)
