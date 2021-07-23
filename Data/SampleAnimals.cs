@@ -54,17 +54,6 @@ namespace ZooManagement.Data
             "Mike",
         };
 
-        private static readonly IList<string> _suffixData = new List<string>
-        {
-            "Sr.",
-            "Jr.",
-            "I",
-            "II",
-            "III",
-            "IV",
-            "V",
-        };
-
         public static IEnumerable<AnimalDbModel> GetAnimals() 
         {
             var animalTypes = _animalTypeData.Select(at => new AnimalTypeDbModel 
@@ -89,10 +78,11 @@ namespace ZooManagement.Data
             {
                 Name = name,
                 Sex = rnd.Next(0,2) == 1 ? "Male" : "Female",
+                AnimalEnclosure = (Enclosure) rnd.Next(0,6),
                 DateOfBirth = new DateTime(rnd.Next(2015, 2019), rnd.Next(1, 13), rnd.Next(1, 29)),
                 DateOfAcquisition = new DateTime(2020, rnd.Next(1, 12), rnd.Next(1, 28)),
                 AnimalType = animalTypes[rnd.Next(0, _animalTypeData.Count())]
- 
+
             };
 
             return animal;

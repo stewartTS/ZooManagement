@@ -7,8 +7,6 @@ namespace ZooManagement.Request
 {
     public class CreateAnimalRequest
     {
-        [Required]
-        public int Id { get; set; }
        
         [Required]
         [StringLength(70)]
@@ -30,6 +28,9 @@ namespace ZooManagement.Request
 
         [Required]
         public Classification AnimalClassification { get; set; }
+
+        [Required]
+        public Enclosure AnimalEnclosure { get; set; }
     }
 }
 

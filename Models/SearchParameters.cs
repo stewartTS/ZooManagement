@@ -14,5 +14,6 @@ namespace ZooManagement.Models
         public int? Age { get; set; }
         public string Name { get; set; }
         public DateTime? DateOfAcquisition { get; set; }
+        public Enclosure? AnimalEnclosure { get; set; }
     }
 }

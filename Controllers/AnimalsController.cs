@@ -34,15 +34,23 @@ namespace ZooManagement.Controllers
         public ActionResult<AnimalAPIModel> GetAnimalById([FromRoute] int id)
         {
             var animal = _animals.GetAnimalById(id);
-            return new AnimalAPIModel(animal);
+
+            return animal == null ? NotFound() : new AnimalAPIModel(animal);
         }
 
         [HttpPost("create")]
         public ActionResult Create([FromBody] CreateAnimalRequest newAnimal)
         {
+
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
+            }
+
+            if (_animals.IsEnclosureAvailable(newAnimal))
+            {
+                return BadRequest("Enclosure is not available.");
             }
 
             _animals.Create(newAnimal);

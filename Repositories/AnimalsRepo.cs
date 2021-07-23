@@ -1,11 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using ZooManagement.Enums;
 using ZooManagement.Models;
-using ZooManagement.Models.API;
 using ZooManagement.Models.Database;
 using ZooManagement.Request;
 
@@ -15,6 +13,7 @@ namespace ZooManagement.Repositories
     {
         AnimalDbModel GetAnimalById(int id);
         void Create(CreateAnimalRequest newAnimal);
+        bool IsEnclosureAvailable(CreateAnimalRequest newAnimal);
 
         List<string> GetAllSpecies();
         IEnumerable<AnimalDbModel> GetAnimals(AnimalParameters animalParameters, SearchParameters searchParameters);
@@ -34,8 +33,35 @@ namespace ZooManagement.Repositories
         public AnimalDbModel GetAnimalById(int id)
         {
             return _context.Animals
-                .Single(animal => animal.Id == id);
+                .SingleOrDefault(animal => animal.Id == id);
         }
+
+        public bool IsEnclosureAvailable(CreateAnimalRequest newAnimal)
+        {
+            var maxOccupants = 0;
+            switch (newAnimal.AnimalEnclosure)
+            {
+                case Enclosure.Lion:
+                    maxOccupants = 10;
+                    break;
+                case Enclosure.Aviary:
+                    maxOccupants = 50;
+                    break;
+                case Enclosure.Reptile:
+                    maxOccupants = 40;
+                    break;
+                case Enclosure.Giraffe:
+                    maxOccupants = 6;
+                    break;
+                case Enclosure.Hippo:
+                    maxOccupants = 10;
+                    break;
+            }
+
+            return (_context.Animals.Where(a => a.AnimalEnclosure == newAnimal.AnimalEnclosure).ToList().Count < maxOccupants);
+
+        }
+
 
         public void Create(CreateAnimalRequest newAnimal)
         {
@@ -49,9 +75,9 @@ namespace ZooManagement.Repositories
 
             var animal = new AnimalDbModel
             {
-                Id = newAnimal.Id,
                 Sex = newAnimal.Sex,
                 Name = newAnimal.Name,
+                AnimalEnclosure = newAnimal.AnimalEnclosure,
                 DateOfBirth = newAnimal.DateOfBirth,
                 DateOfAcquisition = newAnimal.DateOfAcquisition,
                 AnimalType = existingAnimalType
@@ -59,12 +85,10 @@ namespace ZooManagement.Repositories
 
             _context.Animals.Add(animal);
             _context.SaveChanges();
+
         }
 
-        public List<string> GetAllSpecies()
-        {
-            return _context.AnimalType.Select(at => at.Species).ToList();
-        }
+        public List<string> GetAllSpecies() => _context.AnimalType.Select(at => at.Species).ToList();
 
         public IEnumerable<AnimalDbModel> GetAnimals(AnimalParameters animalParameters, SearchParameters searchParameters)
         {
@@ -75,16 +99,17 @@ namespace ZooManagement.Repositories
             {
                 var earliestAge = DateTime.Now.AddYears(-searchParameters.Age - 1 ?? 0);
                 var currentAge = DateTime.Now.AddYears(-searchParameters.Age ?? 0);
-        
-                query = query.Where(a => 
+
+                query = query.Where(a =>
                     (string.IsNullOrEmpty(searchParameters.Species) || a.AnimalType.Species.ToLower() == searchParameters.Species.ToLower()) &&
                     (string.IsNullOrEmpty(searchParameters.Name) || a.Name.ToLower() == searchParameters.Name.ToLower()) &&
                     (searchParameters.AnimalClassification == null || a.AnimalType.AnimalClassification == searchParameters.AnimalClassification) &&
                     (searchParameters.Age == null || a.DateOfBirth <= currentAge && a.DateOfBirth > earliestAge) &&
-                    (searchParameters.DateOfAcquisition == null || a.DateOfAcquisition == searchParameters.DateOfAcquisition)
+                    (searchParameters.DateOfAcquisition == null || a.DateOfAcquisition == searchParameters.DateOfAcquisition) &&
+                    (searchParameters.AnimalEnclosure == null || a.AnimalEnclosure == searchParameters.AnimalEnclosure)
                     );
             }
-             
+
 
             return query
                 .OrderBy(ap => ap.Name)
